@@ -7,16 +7,12 @@ ProductId = []
 ProductInputPrice = []
 
 def InputPriceReader():
-  f = open('input_price.csv', 'rU' ) #open the file in read universal mode
+  f = open('input_price.csv', 'rU' )
   for line in f:
     InputPriceData = line.split(",")
-    ProductId.append(InputPriceData[0]) #since we want the first, second and third column
+    ProductId.append(InputPriceData[0])
     ProductInputPrice.append(InputPriceData[1])
-    # ProductOutputPrice.append(cells[2].replace("\n", ""))
   f.close()
-  return ProductId
-  return ProductInputPrice
-
 InputPriceReader()
 
 # ============================================================
@@ -24,8 +20,9 @@ DateProductOut = []
 ProductIdOut= []
 ProductOutputPrice = []
 
+filename = raw_input('Enter "Product Output Price" file name here: ')
 def ReadOutputPrice():
-  with open("today.csv", "rt") as f:
+  with open(filename, "rt") as f:
     reader = csv.reader(f)
     next(reader, None)  # skip the headers
     for line in f:
@@ -35,11 +32,15 @@ def ReadOutputPrice():
       ProductOutputPrice.append(OutputPriceData[2].replace("\n", ""))
     ProductIdOut.append("")
     f.close()
+  while True:
+    try:
+      DateProductOut.remove("")
+    except ValueError:
+      break
 ReadOutputPrice()
 
 # ===================================================
 
-DateProductOutList = []
 ProductOutputPriceList = []
 ProductInputPriceList = []
 OutputPriceSumList = []
@@ -49,12 +50,12 @@ SubPriceList = []
 def FitData():
   ofile  = open('MonthData.csv', "wb")
   outputWriter = csv.writer(ofile, delimiter = ",")
-  outputWriter.writerow(["Product Out ID", "Product Output Price", "Product Input Price", "Earning"])
+  outputWriter.writerow(["Date", "Product Output Price", "Product Input Price", "Earning"])
 
   for i in range(0, len(ProductIdOut)):
     for j in range(len(ProductId)):
       if ProductId[j] == ProductIdOut[i]:
-        DateProductOutList.append(DateProductOut[i])
+        # DateProductOutList.append(DateProductOut[i])
         ProductOutputPriceList.append(ProductOutputPrice[i])
         ProductInputPriceList.append(ProductInputPrice[j])
       if (ProductIdOut[i] == ""):
@@ -80,19 +81,19 @@ def FitData():
 
   for i in range(len(OutputPriceSumList)):
     SubPriceList.append(int(OutputPriceSumList[i]) - int(InputPriceSumList[i]))
+
   j=0
   for i in range(len(ProductIdOut)):
-    if (ProductIdOut[i]<> ""):
+    if (ProductIdOut[i]== ""):
       # outputWriter.writerow([DateProductOut[i], ProductIdOut[i], ProductOutputPriceList[i], ProductInputPriceList[i]])
-      print "ssss"
-    else:
-      outputWriter.writerow(["", OutputPriceSumList[j], InputPriceSumList[j], SubPriceList[j]])
+    # else:
+      outputWriter.writerow([DateProductOut[j], OutputPriceSumList[j], InputPriceSumList[j], SubPriceList[j]])
       # outputWriter.writerow(["\n"])
       j+=1
-    # break
 FitData()
 
-print DateProductOutList
+# print DateProductOut
+# print DateProductOutList
 # print ProductIdOut
 # print ProductOutputPriceList
 # print ProductInputPriceList
