@@ -86,7 +86,7 @@ def FitData():
   for i in range(len(ProductIdOut)):
     if (ProductIdOut[i]== ""):
       # outputWriter.writerow([DateProductOut[i], ProductIdOut[i], ProductOutputPriceList[i], ProductInputPriceList[i]])
-    # else:
+    # else:P
       outputWriter.writerow([DateProductOut[j], OutputPriceSumList[j], InputPriceSumList[j], SubPriceList[j]])
       # outputWriter.writerow(["\n"])
       j+=1
