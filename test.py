@@ -11,13 +11,15 @@ def InputPriceReader():
   for line in f:
     InputPriceData = line.split(",")
     ProductId.append(InputPriceData[0])
-    ProductInputPrice.append(InputPriceData[1])
+    ProductInputPrice.append(int(InputPriceData[1]))
   f.close()
 InputPriceReader()
 
 # ============================================================
+
 DateProductOut = []
 ProductIdOut= []
+NumberProductOut = []
 ProductOutputPrice = []
 
 filename = raw_input('Enter "Product Output Price" file name here: ')
@@ -28,9 +30,20 @@ def ReadOutputPrice():
     for line in f:
       OutputPriceData = line.split(",")
       DateProductOut.append(OutputPriceData[0])
-      ProductIdOut.append(OutputPriceData[1]) #since we want the first, second and third column
-      ProductOutputPrice.append(OutputPriceData[2].replace("\n", ""))
+      ProductIdOut.append(OutputPriceData[1].upper()) #since we want the first, second and third column
+
+      if OutputPriceData[2] == "":
+        NumberProductOut.append(1)
+      else:
+        NumberProductOut.append(int(OutputPriceData[2]))
+      # ProductOutputPrice.append(OutputPriceData[3])
+
+      if OutputPriceData[3] == "\n":
+        ProductOutputPrice.append(0)
+      else:
+        ProductOutputPrice.append(int(OutputPriceData[3].replace("\n", "")))
     ProductIdOut.append("")
+
     f.close()
   while True:
     try:
@@ -55,9 +68,8 @@ def FitData():
   for i in range(0, len(ProductIdOut)):
     for j in range(len(ProductId)):
       if ProductId[j] == ProductIdOut[i]:
-        # DateProductOutList.append(DateProductOut[i])
-        ProductOutputPriceList.append(ProductOutputPrice[i])
-        ProductInputPriceList.append(ProductInputPrice[j])
+        ProductOutputPriceList.append(ProductOutputPrice[i] * NumberProductOut[i])
+        ProductInputPriceList.append(ProductInputPrice[j] * NumberProductOut[i])
       if (ProductIdOut[i] == ""):
         ProductOutputPriceList.append("")
         ProductInputPriceList.append("")
@@ -65,22 +77,22 @@ def FitData():
 
   OutputSum = 0
   for x in ProductOutputPriceList:
-    if x <> "":
-      OutputSum = OutputSum + int(x)
+    if x <> '':
+      OutputSum = OutputSum + x
     else:
-      OutputPriceSumList.append(str(OutputSum))
+      OutputPriceSumList.append(int(OutputSum))
       OutputSum = 0
 
   InputSum = 0
   for y in ProductInputPriceList:
-    if y <> "":
-      InputSum = InputSum + int(y)
+    if y <> '':
+      InputSum = InputSum + y
     else:
-      InputPriceSumList.append(str(InputSum))
+      InputPriceSumList.append(int(InputSum))
       InputSum = 0
 
   for i in range(len(OutputPriceSumList)):
-    SubPriceList.append(int(OutputPriceSumList[i]) - int(InputPriceSumList[i]))
+    SubPriceList.append(OutputPriceSumList[i] - InputPriceSumList[i])
 
   j=0
   for i in range(len(ProductIdOut)):
@@ -89,12 +101,16 @@ def FitData():
       j+=1
 FitData()
 
+# print ProductId
+# print ProductInputPrice
+
 # print DateProductOut
-# print DateProductOutList
 print ProductIdOut
-print ProductOutputPriceList
+# print NumberProductOut
+# print ProductOutputPrice
+# print NumberProductOut
 # print ProductInputPriceList
-print OutputPriceSumList
+# print ProductOutputPriceList
+# print OutputPriceSumList
 # print InputPriceSumList
 # print SubPriceList
-
