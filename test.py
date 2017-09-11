@@ -111,6 +111,6 @@ print ProductIdOut
 # print NumberProductOut
 # print ProductInputPriceList
 # print ProductOutputPriceList
-# print OutputPriceSumList
-# print InputPriceSumList
-# print SubPriceList
+print OutputPriceSumList
+print InputPriceSumList
+print SubPriceList

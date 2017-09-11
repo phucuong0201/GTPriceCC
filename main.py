@@ -55,7 +55,6 @@ def FitData():
   for i in range(0, len(ProductIdOut)):
     for j in range(len(ProductId)):
       if ProductId[j] == ProductIdOut[i]:
-        # DateProductOutList.append(DateProductOut[i])
         ProductOutputPriceList.append(ProductOutputPrice[i])
         ProductInputPriceList.append(ProductInputPrice[j])
       if (ProductIdOut[i] == ""):
@@ -91,10 +90,10 @@ FitData()
 
 # print DateProductOut
 # print DateProductOutList
-print ProductIdOut
-print ProductOutputPriceList
+# print ProductIdOut
+# print ProductOutputPriceList
 # print ProductInputPriceList
 print OutputPriceSumList
-# print InputPriceSumList
-# print SubPriceList
+print InputPriceSumList
+print SubPriceList
 
